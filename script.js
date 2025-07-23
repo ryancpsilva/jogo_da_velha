@@ -1,118 +1,90 @@
-let a = {a1: '', a2: '', a3: ''};
-let b = {b1: '', b2: '', b3: ''};
-let c = {c1: '', c2: '', c3: ''};
+let arr = [
+    ['','',''],
+    ['','',''],
+    ['','','']
+]
 let avaliador = 0
 
 function clicou(cel) {
     let celula = document.getElementById(`${cel}`)
-    
-    if (avaliador > 8) {
-        console.log('Acabou o jogo!');
-        return;
+    let paragrafo = document.getElementById('paragrafo')
+    // Verificação de término de jogo
+    if (avaliador == -1) {
+        return paragrafo.textContent = 'Aperte Reiniciar para começar um novo jogo!!'
     }
-
+    // Verificação de Valor a ser inserido na célula
     if (avaliador % 2 != 0) {
+        cel >= 0 && cel < 3 ? arr[0][cel%3] = 'o': false
+        cel >= 3 && cel < 6 ? arr[1][cel%3] = 'o': false
+        cel >= 6 ? arr[2][cel%3] = 'o': false
         celula.textContent = 'O';
-        teste(cel, 'O');
         avaliador++;
+        teste(arr)       
     } else {
-        a[`${cel}`] = 'x' 
+        cel >= 0 && cel < 3 ? arr[0][cel%3] = 'x': false
+        cel >= 3 && cel < 6 ? arr[1][cel%3] = 'x': false
+        cel >= 6 ? arr[2][cel%3] = 'x': false
         celula.textContent = 'X';
-        teste(cel, 'X');
         avaliador++;
+        teste(arr)       
     }
 }
+const teste = (arr) => {   
+     // Verificação linha
+    arr.map( (item) => {
+        if (item.every(item => item =='x')) {
+            return ganhou('X', 'por Linha!')
+        } 
+        if (item.every(item => item =='o')) {
+            return ganhou('O', 'por Linha')
+        } 
+    })
+    // Verificação coluna
+    let l0 =[]
+    let l1 = []
+    let l2 = []
+    arr.forEach(item => {
+        l0.push(item[0])
+        l1.push(item[1])
+        l2.push(item[2])
+    })
+    if (l0.every(item => item == 'x')||l0.every(item => item == 'o')) {
+        return ganhou(l0[0].toUpperCase(), 'por Coluna 1')
+    }
+    if (l1.every(item => item == 'x')||l1.every(item => item == 'o')) {
+        return ganhou(l1[0].toUpperCase(), 'por Coluna 2')
+    }
+    if (l2.every(item => item == 'x')||l2.every(item => item == 'o')) {
+        return ganhou(l2[0].toUpperCase(), 'por Coluna 3')
+    }
+    // Verificação diagonal
+    if (arr[0][0] == arr[1][1] && arr[0][0] == arr[2][2] && arr[0][0] != '') {
+        return ganhou(arr[0][0].toUpperCase(), 'por Diagonal Descendente')
+    }
+    if (arr[0][2] == arr[1][1] && arr[0][2] == arr[2][0] && arr[0][2] != '') {
+         return ganhou(arr[0][2].toUpperCase(), 'por Diagonal Ascendente')
+    }
 
-function teste(cel, val) {
-    switch (cel) {
-        case 'a1':
-            a['a1'] = val
-            break;
-        case 'a2':
-            a['a2'] = val
-            break;
-        case 'a3':
-            a['a3'] = val
-            break;
-        default:
-            break;
-    }    
-    switch (cel) {
-        case 'b1':
-            b['b1'] = val
-            break;
-        case 'b2':
-            b['b2'] = val
-            break;
-        case 'b3':
-            b['b3'] = val
-            break;
-        default:
-            break;
-    }    
-    switch (cel) {
-        case 'c1':
-            c['c1'] = val
-            break;
-        case 'c2':
-            c['c2'] = val
-            break;
-        case 'c3':
-            c['c3'] = val
-            break;
-        default:
-            break;
-    }    
-    if (a['a1'] == a['a2'] && a['a1'] == a['a3'] && a['a1'] != '') {
-       ganhou(val, 'a')
-    }
-    if (b['b1'] == b['b2'] && b['b1'] == b['b3'] && b['b1'] != '') {
-       ganhou(val, 'b')
-    }
-    if (c['c1'] == c['c2'] && c['c1'] == c['c3'] && c['c1'] != '') {
-       ganhou(val, 'c')
-    }
-    if (a['a1'] == b['b1'] && a['a1'] == c['c1'] && a['a1'] != '') {
-       ganhou(val, 'r1')
-    }
-    if (a['a2']== b['b2'] && a['a2'] == c['c2'] && a['a2'] != '') {
-       ganhou(val, 'r2')
-    }
-    if (a['a3'] == b['b3'] && a['a3'] == c['c3'] && a['a3'] != '') {
-       ganhou(val, 'r3')
-    }
-    if (a['a1'] == b['b2'] && a['a1'] == c['c3'] && a['a1'] != '') {
-       ganhou(val, 'r7')
-    }
-    if (a['a3'] == b['b2'] && a['a3'] == c['c1'] && a['a3'] != '') {
-       ganhou(val, 'r8')
-    }
 }
-function ganhou(val, letra) {
+function ganhou(val, msg) {
+    // Mensagem de Vencedor
     console.log(`Parabéns ${val} ganhou`);
     let paragrafo = document.getElementById('paragrafo')
-    paragrafo.textContent += `Parabéns ${val} ganhou!`
-    avaliador += 9;
-    let linha = document.getElementById(`${letra}`) 
-    linha.setAttribute('style', 'display:block;')
+    paragrafo.textContent = `Parabéns ${val} ganhou por ${msg}`
+    avaliador = -1
 }
 function reiniciar() {
+    //Zerar os elementos utilizados
     let celula = document.getElementsByClassName('celula')
-    let barra = document.getElementsByTagName('hr')
-
-    
     for (i in celula) {
         celula[i].textContent = ''
     }
-    
     let paragrafo = document.getElementById('paragrafo')
     paragrafo.textContent = ''
-    
-    a = {a1: '', a2: '', a3: ''};
-    b = {b1: '', b2: '', b3: ''};
-    c = {c1: '', c2: '', c3: ''};
+    arr = [
+    ['','',''],
+    ['','',''],
+    ['','','']
+    ]
     avaliador = 0
-    for(i in barra) {
-        barra[i].setAttribute('style', 'display:none;')
-    }
 }

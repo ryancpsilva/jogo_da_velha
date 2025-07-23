@@ -10,31 +10,23 @@
 </head>
 <body>
     <h1>Jogo da velha</h1>
-    <hr id="r1">
-    <hr id="r2">
-    <hr id="r3">
-    <hr id="b">
-    <hr id="c">
-    <hr id="a">
-    <hr id="r7">
-    <hr id="r8">
-    <div class="conteiner">
-        <div id="linha-1">
-            <div class="celula" onclick="clicou('a1')" id="a1"></div>
-            <div class="celula" onclick="clicou('a2')" id="a2"></div>
-            <div class="celula" onclick="clicou('a3')" id="a3"></div>
+        <div class="conteiner">
+            <div>
+                <div class="celula" onclick="clicou('0')" id="0"></div>
+                <div class="celula" onclick="clicou('3')" id="3"></div>
+                <div class="celula" onclick="clicou('6')" id="6"></div>
+            </div>
+            <div>
+                <div class="celula" onclick="clicou('1')" id="1"></div>
+                <div class="celula" onclick="clicou('4')" id="4"></div>
+                <div class="celula" onclick="clicou('7')" id="7"></div>
+            </div>
+            <div>
+                <div class="celula" onclick="clicou('2')" id="2"></div>
+                <div class="celula" onclick="clicou('5')" id="5"></div>
+                <div class="celula" onclick="clicou('8')" id="8"></div>
+            </div>
         </div>
-        <div id="linha-2">
-            <div class="celula" onclick="clicou('b1')" id="b1"></div>
-            <div class="celula" onclick="clicou('b2')" id="b2"></div>
-            <div class="celula" onclick="clicou('b3')" id="b3"></div>
-        </div>
-        <div id="linha-3">
-            <div class="celula" onclick="clicou('c1')" id="c1"></div>
-            <div class="celula" onclick="clicou('c2')" id="c2"></div>
-            <div class="celula" onclick="clicou('c3')" id="c3"></div>
-        </div>
-    </div>
     <div id="baixo">
         <p id="paragrafo"></p>
         <button onclick="reiniciar()" id="reiniciar">Reiniciar</button>
